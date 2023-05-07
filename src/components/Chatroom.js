@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
 import { Grid } from '@mui/material';
 import { Typography } from '@mui/joy';
+import Message from "./Message"
 
 const Chatroom = ({ news_id }) => {
   const [messages, setMessages] = useState([]);
@@ -11,7 +12,11 @@ const Chatroom = ({ news_id }) => {
   function handleSendMessage(e) {
     e.preventDefault();
     if (currentMessage.trim() === '') return;
-    setMessages([...messages, { text: currentMessage, source: 'user' }]);
+    setMessages([...messages, {
+      text: currentMessage,
+      source: 'user',
+      cypher: "" }
+    ]);
     setCurrentMessage('');
     submitStatus.current = true;
   }
@@ -26,12 +31,7 @@ const Chatroom = ({ news_id }) => {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
     messages.map((message, index) => (
-      <div
-        className={`message ${message.source}`}
-        key={index}
-      >
-        {message.text}
-      </div>
+      <Message message={message} key={index}/>
     ));
   }, [messages]);
  
@@ -46,18 +46,34 @@ const Chatroom = ({ news_id }) => {
       headers: {
         "Content-type": "application/json",
       },
-      "body": JSON.stringify(data)
+      body: JSON.stringify(data)
     })
       .then(response => response.json())
       .then((data) => {
         console.log(data);
+        // process neoviz
+
         // build message
         let prompt = data.prompt + "可能的原因有：";
-        let response = []
-        response.push({text: prompt, source: "system"})
+        let response = [];
+        response.push({
+          "text": prompt,
+          "source": "system",
+          "cypher": ""
+        });
+
         for (let i = 0; i < data.answers.length; i++) {
-          response.push({text: data.answers[i].answer, source: "system"});
+          response.push({
+            "text": data.answers[i],
+            "source": "system",
+            "cypher": ""
+          });
         }
+        response.push({
+          "text": "",
+          "source": "system",
+          "cypher": data.cypher
+        });
         // set current message to system
         setMessages([...messages, ...response]);
       })
@@ -71,13 +87,10 @@ const Chatroom = ({ news_id }) => {
           <Typography level='h4'> 🤔💭 </Typography>
         </Grid>
         <div className="chat-box" ref={chatBoxRef}>
+          {/* Put message here */}
+          {/* use index as key, we dont change the order */}
           {messages.map((message, index) => (
-            <div
-              className={`message ${message.source}`}
-              key={index}
-            >
-              {message.text}
-            </div>
+            <Message message={message} index={index} key={index} />
           ))}
         </div>
 

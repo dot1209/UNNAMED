@@ -1,5 +1,5 @@
 import { Grid, Paper } from "@mui/material";  
-import DrawerAppBar from "../components/AppBar"
+import DrawerAppBar from "../../components/AppBar"
 
 const About = () => {
     return (

@@ -7,7 +7,6 @@ import NeoVis, {
   objectToTitleHtml
 } from "neovis.js/dist/neovis.js";
 import { Grid, Paper } from "@mui/material";
-import { Typography } from "@mui/joy"
 
 const NeoGraph = (props) => {
   const {
@@ -30,7 +29,7 @@ const NeoGraph = (props) => {
           serverUser: neo4jUser,
           serverPassword: neo4jPassword,
       },
-      serverDatabase: "demo2",
+      serverDatabase: "demo",
       labels: {
         [NEOVIS_DEFAULT_CONFIG]: {
           label: "event",
@@ -43,7 +42,7 @@ const NeoGraph = (props) => {
                 if (node.labels.includes("Cause")) {
                   return "red";
                 }
-                else if (node.labels.includes("Reason")) {
+                else if (node.labels.includes("Result")) {
                   return "yellow";
                 }
                 else {
@@ -99,10 +98,7 @@ const NeoGraph = (props) => {
   }, [cypher, neo4jPassword, neo4jUri, neo4jUser]);
 
   return (
-    <Grid container justifyContent="center" alignItems="center" sx={{p: 3}}>
-      <Grid container justifyContent={"center"}>
-        <Typography level='h4'> 事件因果關係知識圖譜 </Typography>
-      </Grid>
+    <Grid container justifyContent="center" alignItems="center" sx={{p: 2}}>
       <Paper elevation={3}>
         <div
           id={containerId}

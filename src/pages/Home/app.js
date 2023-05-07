@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
+import { Typography } from "@mui/joy"
 import { Grid, Paper } from "@mui/material"
-import { InputForm } from "../components/Inputs"
-import { NeoGraph } from "../components/KnowledgeGraph"
-import DrawerAppBar from "../components/AppBar"
-import Chatroom from "../components/Chatroom"
-import MyButton from "../components/Button"
-import examples from "../components/data"
+import { InputForm } from "../../components/Inputs"
+import { NeoGraph } from "../../components/KnowledgeGraph"
+import DrawerAppBar from "../../components/AppBar"
+import Chatroom from "../../components/Chatroom"
+import MyButton from "../../components/Button"
+import examples from "../../components/data"
 
 
 const Home = () => {
@@ -64,18 +65,22 @@ const Home = () => {
             setFormData={handleChange}
             handleClick={handleClick}
           />
-          {console.log(process.env.NEO4J_URI)}
           <div style={{display: "flex"}}>
-            <NeoGraph
-              width={800}
-              height={600}
-              containerId={"id1"}
-              neo4jUri={process.env.REACT_APP_NEO4J_URI}
-              neo4jUser={process.env.REACT_APP_NEO4J_USER}
-              neo4jPassword={process.env.REACT_APP_NEO4J_PASSWORD}
-              cypher={cypher}
-              backgroundColor={"#EEEEEE"}
-              />
+            <div>
+              <Grid container justifyContent={"center"}>
+                <Typography level='h4'> 事件因果關係知識圖譜 </Typography>
+                <NeoGraph
+                  width={800}
+                  height={600}
+                  containerId={"id1"}
+                  neo4jUri={process.env.REACT_APP_NEO4J_URI}
+                  neo4jUser={process.env.REACT_APP_NEO4J_USER}
+                  neo4jPassword={process.env.REACT_APP_NEO4J_PASSWORD}
+                  cypher={cypher}
+                  backgroundColor={"#EEEEEE"}
+                  />
+                </Grid>
+            </div>
             <Chatroom news_id={newsId}/>
           </div>
         </Grid>

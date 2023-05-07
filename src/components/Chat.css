@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     height: 650px;
+    width: 700px;
   }
   
   .chat-box {
@@ -12,7 +13,7 @@
     flex-direction: column;
     /* height: 300px; */
     outline: auto;
-    width: 400px;
+    /* width: 700px; */
   }
   
   .message {
