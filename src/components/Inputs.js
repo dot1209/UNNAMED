@@ -40,6 +40,13 @@ const InputForm = ({formData, setFormData, handleClick}) => {
           onChange={setFormData}
           sx={{width: "25%"}}
         />
+        <FormLabel>新聞連結</FormLabel>
+        <Input
+          name="link"
+          value={formData.link || ''}
+          onChange={setFormData}
+          sx={{width: "25%"}}
+        />
         <FormLabel>新聞文章</FormLabel>
         <Grid container alignItems="center">
           <TextareaAutosize

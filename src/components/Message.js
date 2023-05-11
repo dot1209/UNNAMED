@@ -4,7 +4,7 @@ const Message = ({ message, index }) => {
   if (message.cypher === "") {
     return (
     <div className={`message ${message.source}`}>
-      {message.text}
+      <a href={message.link} target="_blank" rel="noreferrer"> {message.text} </a>
     </div>
     );
   }

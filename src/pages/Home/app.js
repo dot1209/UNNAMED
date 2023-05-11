@@ -7,6 +7,7 @@ import DrawerAppBar from "../../components/AppBar"
 import Chatroom from "../../components/Chatroom"
 import MyButton from "../../components/Button"
 import examples from "../../components/data"
+import './App.css'
 
 
 const Home = () => {
@@ -56,9 +57,34 @@ const Home = () => {
         <Grid container justifyContent="space-evenly" alignItems="center">
           <DrawerAppBar />
           <Grid container justifyContent="left" alignItems="center">
-            <MyButton label={"範例一"} onClick={() => setFormData(examples[0])} />
-            <MyButton label={"範例二"} onClick={() => setFormData(examples[1])} />
-            <MyButton label={"範例三"} onClick={() => setFormData(examples[2])} />
+            <MyButton
+              label={"範例一"}
+              margin={8}
+              onClick={() => setFormData(examples[0])} />
+            <MyButton
+              label={"範例二"}
+              margin={8}
+              onClick={() => setFormData(examples[1])} />
+            <MyButton
+              label={"範例三"}
+              margin={8}
+              onClick={() => setFormData(examples[2])} />
+            <MyButton
+              label={"範例四"}
+              margin={8}
+              onClick={() => setFormData(examples[3])} />
+            <MyButton
+              label={"範例五"}
+              margin={8}
+              onClick={() => setFormData(examples[4])} />
+            <MyButton
+              label={"範例六"}
+              margin={8}
+              onClick={() => setFormData(examples[5])} />
+            <MyButton
+              label={"範例七"}
+              margin={8}
+              onClick={() => setFormData(examples[6])} />
           </Grid>
           <InputForm
             formData={formData}
@@ -70,7 +96,7 @@ const Home = () => {
               <Grid container justifyContent={"center"}>
                 <Typography level='h4'> 事件因果關係知識圖譜 </Typography>
                 <NeoGraph
-                  width={800}
+                  width={750}
                   height={600}
                   containerId={"id1"}
                   neo4jUri={process.env.REACT_APP_NEO4J_URI}

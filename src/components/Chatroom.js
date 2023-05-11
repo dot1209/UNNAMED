@@ -64,7 +64,8 @@ const Chatroom = ({ news_id }) => {
 
         for (let i = 0; i < data.answers.length; i++) {
           response.push({
-            "text": data.answers[i],
+            "text": data.answers[i].answer,
+            "link": data.answers[i].link[0],
             "source": "system",
             "cypher": ""
           });
