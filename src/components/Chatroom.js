@@ -53,19 +53,19 @@ const Chatroom = ({ news_id }) => {
         console.log(data);
         // process neoviz
 
-        // build message
-        let prompt = data.prompt + "可能的原因有：";
         let response = [];
-        response.push({
-          "text": prompt,
-          "source": "system",
-          "cypher": ""
-        });
+        // build message
+        // let prompt = data.prompt + "可能的原因有：";
+        // response.push({
+        //   "text": prompt,
+        //   "source": "system",
+        //   "cypher": ""
+        // });
 
         for (let i = 0; i < data.answers.length; i++) {
           response.push({
             "text": data.answers[i].answer,
-            "link": data.answers[i].link[0],
+            "link": "",
             "source": "system",
             "cypher": ""
           });

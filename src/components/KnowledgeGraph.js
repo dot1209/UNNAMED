@@ -92,7 +92,6 @@ const NeoGraph = (props) => {
       initialCypher: cypher === "" ? "match p = (n) --> (m) return * limit 25" : cypher
       // initialCypher: "match (n) - [r] -> (m) return n, r, m limit 25"
     }
-    console.log(config);
     const vis = new NeoVis(config);
     vis.render();
   }, [cypher, neo4jPassword, neo4jUri, neo4jUser]);

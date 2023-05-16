@@ -96,8 +96,6 @@ const Home = () => {
               <Grid container justifyContent={"center"}>
                 <Typography level='h4'> 事件因果關係知識圖譜 </Typography>
                 <NeoGraph
-                  width={750}
-                  height={600}
                   containerId={"id1"}
                   neo4jUri={process.env.REACT_APP_NEO4J_URI}
                   neo4jUser={process.env.REACT_APP_NEO4J_USER}
