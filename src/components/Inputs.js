@@ -1,4 +1,4 @@
-import { FormLabel, Grid } from "@mui/material";
+import { Box, FormLabel, Grid } from "@mui/material";
 import Input from '@mui/joy/Input';
 
 import TextareaAutosize from '@mui/base/TextareaAutosize';
@@ -33,13 +33,15 @@ const InputForm = ({formData, setFormData, handleClick}) => {
           onChange={setFormData}
           sx={{width: "25%"}}
         />
-        <FormLabel>發佈時間</FormLabel>
+        <Box sx={{p: 1}}></Box>
+        <FormLabel>發佈時間 ex: 2023-05-21T22:32:58</FormLabel>
         <Input
           name="released_time"
           value={formData.released_time || ''}
           onChange={setFormData}
           sx={{width: "25%"}}
         />
+        <Box sx={{p: 1}}></Box>
         <FormLabel>新聞連結</FormLabel>
         <Input
           name="link"
@@ -47,6 +49,7 @@ const InputForm = ({formData, setFormData, handleClick}) => {
           onChange={setFormData}
           sx={{width: "25%"}}
         />
+        <Box sx={{p: 1}}></Box>
         <FormLabel>新聞文章</FormLabel>
         <Grid container alignItems="center">
           <TextareaAutosize

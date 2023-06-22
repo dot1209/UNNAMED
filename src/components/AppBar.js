@@ -66,7 +66,7 @@ function DrawerAppBar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            問都問
+            推理問答系統
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Button

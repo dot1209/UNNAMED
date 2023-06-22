@@ -1,11 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
-import { Grid } from '@mui/material';
+import { Fab, Grid, IconButton } from '@mui/material';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import CloseIcon from '@mui/icons-material/Close';
 import { Typography } from '@mui/joy';
 import Message from "./Message"
 
+const FabChatroom = ({ news_id }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleFabClick = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <>
+    { !open && (
+      <Fab color='primary' onClick={handleFabClick}>
+        <QuestionAnswerIcon />
+      </Fab>
+    )}
+    { open && <Chatroom news_id={news_id} handleClose={handleClose} />}
+    </>
+  );
+}
+
 const Chatroom = ({ news_id }) => {
   const [messages, setMessages] = useState([]);
+  const [snipper, setSnipper] = useState(false);
   const [currentMessage, setCurrentMessage] = useState('');
   const submitStatus = useRef(false);
 
@@ -41,6 +62,7 @@ const Chatroom = ({ news_id }) => {
       "question": messages.at(messages.length-1).text,
       "news_id": news_id
     };
+    setSnipper(true);
     fetch("http://127.0.0.1:8000/single-content-answer", {
       method: "POST",
       headers: {
@@ -54,31 +76,44 @@ const Chatroom = ({ news_id }) => {
         // process neoviz
 
         let response = [];
-        // build message
-        // let prompt = data.prompt + "可能的原因有：";
-        // response.push({
-        //   "text": prompt,
-        //   "source": "system",
-        //   "cypher": ""
-        // });
-
-        for (let i = 0; i < data.answers.length; i++) {
+        if (data.error === "true") {
           response.push({
-            "text": data.answers[i].answer,
-            "link": "",
+            "text": "出了點問題",
             "source": "system",
+            "link": "",
             "cypher": ""
           });
         }
-        response.push({
-          "text": "",
-          "source": "system",
-          "cypher": data.cypher
-        });
+        else if (data.error === "false" && data.answers.length === 0) {
+          response.push({
+            "text": "查無結果",
+            "source": "system",
+            "cypher": "",
+            "link": ""
+          });
+        }
+        else {
+          for (let i = 0; i < data.answers.length; i++) {
+            response.push({
+              "text": data.answers[i].answer,
+              "link": "",
+              "source": "system",
+              "cypher": ""
+            });
+          }
+          response.push({
+            "text": "",
+            "source": "system",
+            "cypher": data.cypher
+          });
+        }
         // set current message to system
         setMessages([...messages, ...response]);
       })
-      .finally(submitStatus.current = false);
+      .finally(() => {
+        submitStatus.current = false;
+        setSnipper(false);
+      });
   }, [messages, news_id]);
 
   return (
@@ -86,6 +121,9 @@ const Chatroom = ({ news_id }) => {
       <div className="chat-container">
         <Grid container justifyContent={"center"}>
           <Typography level='h4'> 🤔💭 </Typography>
+          {/* <IconButton aria-label='close'>
+            <CloseIcon />
+          </IconButton> */}
         </Grid>
         <div className="chat-box" ref={chatBoxRef}>
           {/* Put message here */}
@@ -112,4 +150,4 @@ const Chatroom = ({ news_id }) => {
   );
 }
 
-export default Chatroom;
+export {Chatroom, FabChatroom};
