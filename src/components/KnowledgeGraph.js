@@ -29,7 +29,7 @@ const NeoGraph = (props) => {
           serverUser: neo4jUser,
           serverPassword: neo4jPassword,
       },
-      serverDatabase: "test",
+      serverDatabase: "test2",
       labels: {
         [NEOVIS_DEFAULT_CONFIG]: {
           label: "event",

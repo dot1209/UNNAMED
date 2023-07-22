@@ -63,7 +63,8 @@ const Chatroom = ({ news_id }) => {
       "news_id": news_id
     };
     setSnipper(true);
-    fetch("http://127.0.0.1:8000/single-content-answer", {
+    const endpoint = news_id ? "http://127.0.0.1:8000/single-content-answer" : "http://127.0.0.1:8000/multiple-content-answer"
+    fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
