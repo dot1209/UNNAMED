@@ -74,6 +74,10 @@ function DrawerAppBar(props) {
               LinkComponent={Link} to={"/"}
             >{"問答"}</Button>
             <Button
+              key={"多篇問答"} sx={{ color: '#fff' }}
+              LinkComponent={Link} to={"/multiqa"}
+            >{"多篇問答"}</Button>
+            <Button
               key={"About"} sx={{ color: '#fff' }}
               LinkComponent={Link} to={"/about"}
             >{"About"}</Button>

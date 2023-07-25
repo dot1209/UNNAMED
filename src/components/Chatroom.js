@@ -24,7 +24,7 @@ const FabChatroom = ({ news_id }) => {
   );
 }
 
-const Chatroom = ({ news_id }) => {
+const Chatroom = ({ news_id, w, h }) => {
   const [messages, setMessages] = useState([]);
   const [snipper, setSnipper] = useState(false);
   const [currentMessage, setCurrentMessage] = useState('');
@@ -119,20 +119,24 @@ const Chatroom = ({ news_id }) => {
 
   return (
     <Grid container justifyContent={"center"} alignItems={"end"}>
-      <div className="chat-container">
+      <Grid className="chat-container"
+            flexDirection={"column"}
+            sx={{
+              height: h ? h : "650px",
+              width: w ? w : "400px"}}>
         <Grid container justifyContent={"center"}>
           <Typography level='h4'> 🤔💭 </Typography>
           {/* <IconButton aria-label='close'>
             <CloseIcon />
           </IconButton> */}
         </Grid>
-        <div className="chat-box" ref={chatBoxRef}>
+        <Grid className="chat-box" ref={chatBoxRef} flexDirection={"column"}>
           {/* Put message here */}
           {/* use index as key, we dont change the order */}
           {messages.map((message, index) => (
             <Message message={message} index={index} key={index} />
           ))}
-        </div>
+        </Grid>
 
         <form className="message-form" onSubmit={handleSendMessage}>
           <input
@@ -146,7 +150,7 @@ const Chatroom = ({ news_id }) => {
             Send
           </button>
         </form>
-      </div>
+      </Grid>
     </Grid>
   );
 }
