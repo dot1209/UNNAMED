@@ -82,7 +82,8 @@ const Chatroom = ({ news_id, w, h }) => {
             "text": "出了點問題",
             "source": "system",
             "link": "",
-            "cypher": ""
+            "cypher": "",
+            "company": ""
           });
         }
         else if (data.error === "false" && data.answers.length === 0) {
@@ -90,22 +91,26 @@ const Chatroom = ({ news_id, w, h }) => {
             "text": "查無結果",
             "source": "system",
             "cypher": "",
-            "link": ""
+            "link": "",
+            "company": ""
           });
         }
         else {
           for (let i = 0; i < data.answers.length; i++) {
             response.push({
               "text": data.answers[i].answer,
-              "link": "",
               "source": "system",
-              "cypher": ""
+              "cypher": "",
+              "link": data.answers[i].link,
+              "company": data.answers[i].company
             });
           }
           response.push({
             "text": "",
             "source": "system",
-            "cypher": data.cypher
+            "cypher": data.cypher,
+            "link": "",
+            "company": ""
           });
         }
         // set current message to system

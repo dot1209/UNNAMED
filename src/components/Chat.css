@@ -23,6 +23,11 @@
     margin-bottom: 10px;
     max-width: 80%;
   }
+
+  .foot-note {
+    color: grey;
+    font-size: 10px;
+  }
   
   .user {
     align-self: flex-end;

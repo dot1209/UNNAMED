@@ -10,13 +10,27 @@ const Message = ({ message, index }) => {
   const handleClose = () => setOpen(false);
 
   if (message.cypher === "") {
-    return (
-    <div className={`message ${message.source}`}>
-      <a href={message.link} target="_blank" rel="noreferrer"> {message.text} </a>
-    </div>
-    );
+    // if no cypher, means it is message
+    if (message.source === "system") {
+      return (
+        <div className={`message ${message.source}`}>
+          {message.text + "  "}
+          <a href={message.link} target="_blank" rel="noreferrer" className="foot-note">
+            {`新聞連結: ${message.company}`}
+          </a>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className={`message ${message.source}`}>
+          {message.text}
+        </div>
+      );
+    }
   }
   else {
+    // show the reasoning path
     return (
       <div className={`message ${message.source}`}>
         <MyButton
