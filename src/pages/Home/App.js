@@ -33,7 +33,7 @@ const Home = () => {
       if (!submitStatus) return;
       const data = formData;
       setSnipper(true);
-      fetch("http://127.0.0.1:8000/knowledge-graph", {
+      fetch("http://140.116.245.147:888/knowledge-graph", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

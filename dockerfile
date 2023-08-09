@@ -1,4 +1,4 @@
-FROM node:alpine AS development
+FROM node:18
 
 WORKDIR /react-app
 
