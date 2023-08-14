@@ -1,4 +1,4 @@
-import { Backdrop, Grid, Paper } from "@mui/material"
+import { Backdrop, Box, Grid, Paper } from "@mui/material"
 import DrawerAppBar from "../../components/AppBar"
 import { Chatroom } from "../../components/Chatroom"
 import InputLabel from '@mui/material/InputLabel';
@@ -23,21 +23,20 @@ const MultiQA = () => {
     }}>
       <Grid container justifyContent="space-evenly" alignItems="center">
         <DrawerAppBar />
-        {/* Add dropdown list here */}
-        <FormControl fullWidth>
-          <InputLabel id="demo-kg-select-label">Knowledge Graph</InputLabel>
-          <Select
-            labelId="demo-kg-select-label"
-            id="demo-kg-select"
-            value={kg}
-            label="Knowledge Graph"
-            onChange={handleChange}
-          >
+          <Grid container flexDirection={"column"} paddingLeft={4}>
+            <InputLabel>Knowledge Graph</InputLabel>
+            <Select
+              name="kg"
+              value={kg}
+              label="Knowledge Graph"
+              onChange={setKg}
+              sx={{width: "25%"}}
+            >
             {/* TODO: Hard-cored here, use useEffect to fetch all kgs */}
-            <MenuItem value={"test2"}>test2</MenuItem>
-            <MenuItem value={"drcd"}>drcd</MenuItem>
-          </Select>
-        </FormControl>
+              <MenuItem value={"test2"}>test2</MenuItem>
+              <MenuItem value={"drcd"}>drcd</MenuItem>
+            </Select>
+          </Grid>
         <Grid container justifyContent="left" alignItems="center" display={"flex"}>
           <Chatroom kg={kg} w={"800px"} h={"800px"}/>
         </Grid>
