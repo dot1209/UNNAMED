@@ -17,6 +17,7 @@ const Home = () => {
     const [submitStatus, setSubmitStatus] = useState(false);
     const [cypher, setCypher] = useState("");
     const [newsId, setNewsId] = useState("");
+    const [kg, setKg] = useState("");
     
     const handleChange = (e) => {
       setFormData({
@@ -33,7 +34,9 @@ const Home = () => {
       if (!submitStatus) return;
       const data = formData;
       setSnipper(true);
-      fetch("http://140.116.245.147:888/knowledge-graph", {
+      // const endpoint = "http://127.0.0.1:8000/knowledge-graph";
+      const endpoint = "http://140.116.245.147:888/knowledge-graph";
+      fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -45,6 +48,7 @@ const Home = () => {
           console.log(data)
           setCypher(data.cypher);
           setNewsId(data.news_id);
+          setKg(data.kg);
         })
         .finally(() => {
           setSubmitStatus(false);
@@ -97,7 +101,7 @@ const Home = () => {
                 backgroundColor={"#EEEEEE"}
                 />
             </Grid>
-            <Chatroom news_id={newsId}/>
+            <Chatroom news_id={newsId} kg={kg} />
           </Grid>
         </Grid>
       </Paper>

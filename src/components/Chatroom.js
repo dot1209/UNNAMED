@@ -1,30 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
-import { Fab, Grid, IconButton } from '@mui/material';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import CloseIcon from '@mui/icons-material/Close';
+import { Grid } from '@mui/material';
 import { Typography } from '@mui/joy';
 import Message from "./Message"
 
-const FabChatroom = ({ news_id }) => {
-  const [open, setOpen] = useState(false);
 
-  const handleFabClick = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  return (
-    <>
-    { !open && (
-      <Fab color='primary' onClick={handleFabClick}>
-        <QuestionAnswerIcon />
-      </Fab>
-    )}
-    { open && <Chatroom news_id={news_id} handleClose={handleClose} />}
-    </>
-  );
-}
-
-const Chatroom = ({ news_id, w, h }) => {
+const Chatroom = ({ news_id, kg, w, h }) => {
   const [messages, setMessages] = useState([]);
   const [snipper, setSnipper] = useState(false);
   const [currentMessage, setCurrentMessage] = useState('');
@@ -58,14 +39,18 @@ const Chatroom = ({ news_id, w, h }) => {
  
   useEffect(() => {
     if (!submitStatus.current) return;
+    // TODO: Add selected kg here
     const data = {
       "question": messages.at(messages.length-1).text,
-      "news_id": news_id
+      "news_id": news_id,
+      "kg": kg
     };
+    console.log(data);
     setSnipper(true);
     // TODO: use env
     const server = "http://140.116.245.147:888/";
-    const endpoint = news_id ? server+"single-content-answer" : server+"multiple-content-answer"
+    // const server = "http://127.0.0.1:8000/"
+    const endpoint = news_id ? server+"single-article-answer" : server+"multiple-article-answer"
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -122,20 +107,15 @@ const Chatroom = ({ news_id, w, h }) => {
         submitStatus.current = false;
         setSnipper(false);
       });
-  }, [messages, news_id]);
+  }, [kg, messages, news_id]);
 
   return (
     <Grid container justifyContent={"center"} alignItems={"end"}>
       <Grid className="chat-container"
             flexDirection={"column"}
-            sx={{
-              height: h ? h : "650px",
-              width: w ? w : "400px"}}>
+            sx={{height: h ? h : "650px", width: w ? w : "400px"}}>
         <Grid container justifyContent={"center"}>
           <Typography level='h4'> 🤔💭 </Typography>
-          {/* <IconButton aria-label='close'>
-            <CloseIcon />
-          </IconButton> */}
         </Grid>
         <Grid className="chat-box" ref={chatBoxRef} flexDirection={"column"}>
           {/* Put message here */}
@@ -162,4 +142,4 @@ const Chatroom = ({ news_id, w, h }) => {
   );
 }
 
-export {Chatroom, FabChatroom};
+export { Chatroom };

@@ -1,70 +1,70 @@
 .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 650px;
-    width: 400px;
-  }
-  
-  .chat-box {
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    /* height: 300px; */
-    outline: auto;
-    /* width: 700px; */
-  }
-  
-  .message {
-    background-color: #f5f5f5;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    max-width: 80%;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 650px;
+  width: 400px;
+}
 
-  .foot-note {
-    color: grey;
-    font-size: 10px;
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  /* height: 300px; */
+  outline: auto;
+  /* width: 700px; */
+}
+
+.message {
+  background-color: #f5f5f5;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+.foot-note {
+  color: grey;
+  font-size: 10px;
+}
+
+.user {
+  align-self: flex-end;
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+.system {
+  align-self: flex-start;
+  background-color: #f5f5f5;
+}
+
+.message-form {
+  display: flex;
+  padding: 10px;
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid #ccc;
+}
+
+.send-button {
+  background-color: #5cb85c;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
   }
   
-  .user {
-    align-self: flex-end;
-    background-color: #5cb85c;
-    color: #fff;
+  .send-button:hover {
+  background-color: #449d44;
   }
   
-  .system {
-    align-self: flex-start;
-    background-color: #f5f5f5;
-  }
-  
-  .message-form {
-    display: flex;
-    padding: 10px;
-  }
-  
-  .message-input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px 0 0 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .send-button {
-    background-color: #5cb85c;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    }
-    
-    .send-button:hover {
-    background-color: #449d44;
-    }
-    
-    .send-button:active {
-    background-color: #398439;
-    }  
+  .send-button:active {
+  background-color: #398439;
+  }  
