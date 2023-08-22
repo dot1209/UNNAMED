@@ -4,8 +4,10 @@ import { Grid } from '@mui/material';
 import { Typography } from '@mui/joy';
 import Message from "./Message"
 
-const Chatroom = ({ news_id }) => {
+
+const Chatroom = ({ news_id, kg, w, h }) => {
   const [messages, setMessages] = useState([]);
+  const [snipper, setSnipper] = useState(false);
   const [currentMessage, setCurrentMessage] = useState('');
   const submitStatus = useRef(false);
 
@@ -37,11 +39,19 @@ const Chatroom = ({ news_id }) => {
  
   useEffect(() => {
     if (!submitStatus.current) return;
+    // TODO: Add selected kg here
     const data = {
       "question": messages.at(messages.length-1).text,
-      "news_id": news_id
+      "news_id": news_id,
+      "kg": kg
     };
-    fetch("http://127.0.0.1:8000/single-content-answer", {
+    console.log(data);
+    setSnipper(true);
+    // TODO: use env
+    const server = "http://140.116.245.147:888/";
+    // const server = "http://127.0.0.1:8000/"
+    const endpoint = news_id ? server+"single-article-answer" : server+"multiple-article-answer"
+    fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -54,46 +64,66 @@ const Chatroom = ({ news_id }) => {
         // process neoviz
 
         let response = [];
-        // build message
-        // let prompt = data.prompt + "可能的原因有：";
-        // response.push({
-        //   "text": prompt,
-        //   "source": "system",
-        //   "cypher": ""
-        // });
-
-        for (let i = 0; i < data.answers.length; i++) {
+        if (data.error === "true") {
           response.push({
-            "text": data.answers[i].answer,
-            "link": "",
+            "text": "出了點問題",
             "source": "system",
-            "cypher": ""
+            "link": "",
+            "cypher": "",
+            "company": ""
           });
         }
-        response.push({
-          "text": "",
-          "source": "system",
-          "cypher": data.cypher
-        });
+        else if (data.error === "false" && data.answers.length === 0) {
+          response.push({
+            "text": "查無結果",
+            "source": "system",
+            "cypher": "",
+            "link": "",
+            "company": ""
+          });
+        }
+        else {
+          for (let i = 0; i < data.answers.length; i++) {
+            response.push({
+              "text": data.answers[i].answer,
+              "source": "system",
+              "cypher": "",
+              "link": data.answers[i].link,
+              "company": data.answers[i].company
+            });
+          }
+          response.push({
+            "text": "",
+            "source": "system",
+            "cypher": data.cypher,
+            "link": "",
+            "company": ""
+          });
+        }
         // set current message to system
         setMessages([...messages, ...response]);
       })
-      .finally(submitStatus.current = false);
-  }, [messages, news_id]);
+      .finally(() => {
+        submitStatus.current = false;
+        setSnipper(false);
+      });
+  }, [kg, messages, news_id]);
 
   return (
     <Grid container justifyContent={"center"} alignItems={"end"}>
-      <div className="chat-container">
+      <Grid className="chat-container"
+            flexDirection={"column"}
+            sx={{height: h ? h : "650px", width: w ? w : "400px"}}>
         <Grid container justifyContent={"center"}>
           <Typography level='h4'> 🤔💭 </Typography>
         </Grid>
-        <div className="chat-box" ref={chatBoxRef}>
+        <Grid className="chat-box" ref={chatBoxRef} flexDirection={"column"}>
           {/* Put message here */}
           {/* use index as key, we dont change the order */}
           {messages.map((message, index) => (
             <Message message={message} index={index} key={index} />
           ))}
-        </div>
+        </Grid>
 
         <form className="message-form" onSubmit={handleSendMessage}>
           <input
@@ -107,9 +137,9 @@ const Chatroom = ({ news_id }) => {
             Send
           </button>
         </form>
-      </div>
+      </Grid>
     </Grid>
   );
 }
 
-export default Chatroom;
+export { Chatroom };

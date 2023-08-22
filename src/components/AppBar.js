@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,7 +16,7 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
-const navItems = ['問答', 'About'];
+const navItems = ['問答', '多篇問答', 'About'];
 
 function DrawerAppBar(props) {
   const { window } = props;
@@ -30,7 +29,7 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        問都問
+        推理問答系統
       </Typography>
       <Divider />
       <List>
@@ -66,13 +65,17 @@ function DrawerAppBar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            問都問
+            推理問答系統
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Button
               key={"問答"} sx={{ color: '#fff' }}
               LinkComponent={Link} to={"/"}
             >{"問答"}</Button>
+            <Button
+              key={"多篇問答"} sx={{ color: '#fff' }}
+              LinkComponent={Link} to={"/multiqa"}
+            >{"多篇問答"}</Button>
             <Button
               key={"About"} sx={{ color: '#fff' }}
               LinkComponent={Link} to={"/about"}
@@ -103,13 +106,5 @@ function DrawerAppBar(props) {
     </Box>
   );
 }
-
-DrawerAppBar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 export default DrawerAppBar;

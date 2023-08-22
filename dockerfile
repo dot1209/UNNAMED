@@ -1,4 +1,4 @@
-FROM node:alpine AS development
+FROM node:18
 
 WORKDIR /react-app
 
@@ -7,4 +7,6 @@ RUN npm install
 
 COPY . .
 
-CMD npm start
+CMD serve -s build
+
+# CMD npm start

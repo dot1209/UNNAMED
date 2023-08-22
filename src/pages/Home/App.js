@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react"
 import { Typography } from "@mui/joy"
-import { Grid, Paper } from "@mui/material"
+import { Backdrop, Grid, Paper } from "@mui/material"
 import { InputForm } from "../../components/Inputs"
 import { NeoGraph } from "../../components/KnowledgeGraph"
 import DrawerAppBar from "../../components/AppBar"
-import Chatroom from "../../components/Chatroom"
+import { Chatroom, FabChatroom } from "../../components/Chatroom"
 import MyButton from "../../components/Button"
 import examples from "../../components/data"
 import './App.css'
+import { PacmanLoader } from "react-spinners"
 
 
 const Home = () => {
     const [formData, setFormData] = useState({});
+    const [snipper, setSnipper] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(false);
     const [cypher, setCypher] = useState("");
     const [newsId, setNewsId] = useState("");
+    const [kg, setKg] = useState("");
     
     const handleChange = (e) => {
       setFormData({
@@ -30,8 +33,10 @@ const Home = () => {
     useEffect(() => {
       if (!submitStatus) return;
       const data = formData;
-      console.log(JSON.stringify(data));
-      fetch("http://127.0.0.1:8000/knowledge-graph", {
+      setSnipper(true);
+      // const endpoint = "http://127.0.0.1:8000/knowledge-graph";
+      const endpoint = "http://140.116.245.147:888/knowledge-graph";
+      fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -43,8 +48,12 @@ const Home = () => {
           console.log(data)
           setCypher(data.cypher);
           setNewsId(data.news_id);
+          setKg(data.kg);
         })
-        .finally(() => setSubmitStatus(false));
+        .finally(() => {
+          setSubmitStatus(false);
+          setSnipper(false);
+        });
     }, [formData, submitStatus]);
     
     return (
@@ -54,6 +63,9 @@ const Home = () => {
         minHeight: '100vh',
         background: 'linear-gradient(180deg, #FFFFFF 0%, #CCCCCC 100%)',
       }}>
+        <Backdrop open={snipper}>
+          <PacmanLoader color="#36d7b7" loading={snipper}/>
+        </Backdrop>
         <Grid container justifyContent="space-evenly" alignItems="center">
           <DrawerAppBar />
           <Grid container justifyContent="left" alignItems="center">
@@ -69,44 +81,28 @@ const Home = () => {
               label={"範例三"}
               margin={8}
               onClick={() => setFormData(examples[2])} />
-            <MyButton
-              label={"範例四"}
-              margin={8}
-              onClick={() => setFormData(examples[3])} />
-            <MyButton
-              label={"範例五"}
-              margin={8}
-              onClick={() => setFormData(examples[4])} />
-            <MyButton
-              label={"範例六"}
-              margin={8}
-              onClick={() => setFormData(examples[5])} />
-            <MyButton
-              label={"範例七"}
-              margin={8}
-              onClick={() => setFormData(examples[6])} />
           </Grid>
           <InputForm
             formData={formData}
             setFormData={handleChange}
             handleClick={handleClick}
           />
-          <div style={{display: "flex"}}>
-            <div>
-              <Grid container justifyContent={"center"}>
-                <Typography level='h4'> 事件因果關係知識圖譜 </Typography>
-                <NeoGraph
-                  containerId={"id1"}
-                  neo4jUri={process.env.REACT_APP_NEO4J_URI}
-                  neo4jUser={process.env.REACT_APP_NEO4J_USER}
-                  neo4jPassword={process.env.REACT_APP_NEO4J_PASSWORD}
-                  cypher={cypher}
-                  backgroundColor={"#EEEEEE"}
-                  />
-                </Grid>
-            </div>
-            <Chatroom news_id={newsId}/>
-          </div>
+          <Grid display={"flex"}>
+            <Grid container justifyContent={"center"}>
+              <Typography level='h4'> 事件因果關係知識圖譜 </Typography>
+              <NeoGraph
+                width={800}
+                height={800}
+                containerId={"id1"}
+                neo4jUri={process.env.REACT_APP_NEO4J_URI}
+                neo4jUser={process.env.REACT_APP_NEO4J_USER}
+                neo4jPassword={process.env.REACT_APP_NEO4J_PASSWORD}
+                cypher={cypher}
+                backgroundColor={"#EEEEEE"}
+                />
+            </Grid>
+            <Chatroom news_id={newsId} kg={kg} />
+          </Grid>
         </Grid>
       </Paper>
     );

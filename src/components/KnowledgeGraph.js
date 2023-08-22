@@ -29,49 +29,41 @@ const NeoGraph = (props) => {
           serverUser: neo4jUser,
           serverPassword: neo4jPassword,
       },
-      serverDatabase: "demo3",
+      serverDatabase: "test2",
       labels: {
         [NEOVIS_DEFAULT_CONFIG]: {
           label: "event",
           [NEOVIS_ADVANCED_CONFIG]: {
+            // node: {
+            //   identity: int,
+            //   labels: List[str],
+            //   properties: Dict[str, str],
+            // }
             function: {
               title: (node) => {
-                return objectToTitleHtml(node, ["event", "weight"])
+                return objectToTitleHtml(node, ["event", "weight"]);
               },
               color: (node) => {
-                if (node.labels.includes("Cause")) {
-                  return "red";
-                }
-                else if (node.labels.includes("Result")) {
-                  return "yellow";
-                }
-                else {
-                  return "blue";
-                }
+                return [
+                  "#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#6495ED"
+                ].at(Math.floor(node.identity % 5));
+              }
+            },
+            static: {
+              font: {
+                size: 20
+              },
+              margin: 15,
+              shape: "box",
+              widthConstraint: {
+                maximum: 500
               }
             }
           }
         }
       },
       relationships: {
-        SYN: {
-          [NEOVIS_ADVANCED_CONFIG]: {
-            function: {
-              title: (edge) => {return objectToTitleHtml(edge, undefined)}
-            },
-            static: {
-              color: "green",
-              arrows: "from, to",
-              width: 5,
-              font: {
-                align: "top",
-                size: 20,
-              },
-              label: "SYN"
-            }
-          }
-        },
-        CAUSE: {
+        [NEOVIS_DEFAULT_CONFIG]: {
           [NEOVIS_ADVANCED_CONFIG]: {
             function: {
               title: (edge) => {return objectToTitleHtml(edge, undefined)}
@@ -80,11 +72,11 @@ const NeoGraph = (props) => {
               color: "red",
               arrows: "to",
               width: 5,
+              length: 100,
               font: {
                 align: "top",
                 size: 20,
-              },
-              label: "CAUSE",
+              }
             }
           }
         }
